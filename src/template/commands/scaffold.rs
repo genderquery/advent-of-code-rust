@@ -1,3 +1,4 @@
+use indoc::indoc;
 use std::{
     fs::{File, OpenOptions},
     io::Write,
@@ -8,11 +9,11 @@ use crate::Day;
 
 const MODULE_TEMPLATE: &str = r#"advent_of_code::solution!(DAY_NUMBER);
 
-pub fn part_one(input: &str) -> Option<u32> {
+pub fn part_one(input: &str) -> Option<String> {
     None
 }
 
-pub fn part_two(input: &str) -> Option<u32> {
+pub fn part_two(input: &str) -> Option<String> {
     None
 }
 
@@ -22,13 +23,15 @@ mod tests {
 
     #[test]
     fn test_part_one() {
-        let result = part_one(&advent_of_code::template::read_file("examples", DAY));
+        const INPUT: &str = indoc! {""};
+        let result = part_one(INPUT);
         assert_eq!(result, None);
     }
 
     #[test]
     fn test_part_two() {
-        let result = part_two(&advent_of_code::template::read_file("examples", DAY));
+        const INPUT: &str = indoc! {""};
+        let result = part_two(INPUT);
         assert_eq!(result, None);
     }
 }
@@ -44,7 +47,6 @@ fn create_file(path: &str) -> Result<File, std::io::Error> {
 
 pub fn handle(day: Day) {
     let input_path = format!("data/inputs/{day}.txt");
-    let example_path = format!("data/examples/{day}.txt");
     let module_path = format!("src/bin/{day}.rs");
 
     let mut file = match safe_create_file(&module_path) {
@@ -75,16 +77,6 @@ pub fn handle(day: Day) {
         }
         Err(e) => {
             eprintln!("Failed to create input file: {e}");
-            process::exit(1);
-        }
-    }
-
-    match create_file(&example_path) {
-        Ok(_) => {
-            println!("Created empty example file \"{}\"", &example_path);
-        }
-        Err(e) => {
-            eprintln!("Failed to create example file: {e}");
             process::exit(1);
         }
     }
